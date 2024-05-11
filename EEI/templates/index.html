@@ -5,13 +5,13 @@
   <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home" style="margin: 20px auto; display: block;" width="300" height="300">
 </div>
 
-
-  <hr>
-  <!-- Mostra le foto di tutti gli utenti -->
-  {% if photos %}
-    <h2>Le foto degli utenti</h2>
-    {% for photo in photos %}
-      <div class="photo-card">
+<hr>
+<!-- Mostra le foto di tutti gli utenti in ordine inverso -->
+{% if photos %}
+  <h2>Le foto degli utenti</h2>
+  <div id="photos-container">
+    {% for photo in photos|reverse %}
+      <div class="photo-card" id="photo-{{ photo.id }}">
         <a href="{{ url_for('photo_detail', photo_id=photo.id) }}">
           <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" alt="{{ photo.title }}">
         </a>
@@ -22,8 +22,9 @@
         <p>Provincia: {{ photo.province }}</p>
       </div>
     {% endfor %}
-  {% else %}
-    <p>Non ci sono foto caricate dagli utenti.</p>
-  {% endif %}
-  <hr>
+  </div>
+{% else %}
+  <p>Non ci sono foto caricate dagli utenti.</p>
+{% endif %}
+<hr>
 {% endblock %}

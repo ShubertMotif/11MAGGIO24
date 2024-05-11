@@ -1,53 +1,55 @@
-/* Stili per il menu */
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  background-color: #333;
-  display: none; /* Nascondi il menu principale per default */
+/* Stile di base per il corpo della pagina */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Font leggibile per testi sul web */
 }
 
-nav ul li {
-  float: none; /* Resetta il float */
+/* Container generale per le foto, massimo 75% dello schermo */
+.photo-container {
+    max-width: 75%;
+    margin: 0 auto; /* Centra il container orizzontalmente */
+    padding: 20px; /* Spazio intorno al contenuto interno */
+    box-sizing: border-box; /* Include padding e border nel width/height */
 }
 
-nav ul li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
+/* Singola foto nel container */
+.photo-card {
+    border: 1px solid #ddd; /* Bordo sottile per definire il contorno */
+    border-radius: 4px; /* Angoli arrotondati */
+    overflow: hidden; /* Nasconde contenuti che fuoriescono */
+    margin-bottom: 20px; /* Spazio tra le carte */
+    text-align: center; /* Centra il testo e immagini all'interno */
 }
 
-nav ul li a:hover {
-  background-color: #111;
+/* Immagini all'interno delle card */
+.photo-card img {
+    width: 100%; /* Larghezza massima all'interno del container */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
+    display: block; /* Previene margini extra sotto l'immagine */
 }
 
-nav ul li a h3 {
-  margin: 0;
+/* Container generale per le offerte con sfondo grigio */
+.offerte-container {
+    background-color: #f0f0f0; /* Sfondo grigio chiaro per distinguere le offerte */
+    padding: 20px;
+    margin: 20px auto; /* Spazio esterno e centratura */
+    max-width: 80%; /* Larghezza massima del container delle offerte */
+    box-sizing: border-box;
 }
 
-/* Stili per il menu a tendina */
-.menu-toggle {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
+/* Stili specifici per ogni offerta nel container */
+.offerta {
+    border: 1px solid #ccc; /* Bordo leggermente più scuro */
+    padding: 10px; /* Padding interno */
+    margin-bottom: 10px; /* Margine inferiore per separare le offerte */
+    background-color: #ffffff; /* Sfondo bianco per il contrasto interno */
 }
 
-/* Mostra il menu a tendina solo su dispositivi mobili */
-@media (max-width: 768px) {
-  nav ul li {
-    display: none; /* Nascondi gli elementi del menu */
-  }
-
-  .menu-toggle {
-    display: block; /* Mostra il link del menu a tendina */
-  }
-
-  .menu-active ul {
-    display: block; /* Mostra il menu a tendina quando il menu è attivo */
-  }
+/* Gestione dei testi lunghi */
+p, h2 {
+    word-wrap: break-word; /* A capo automaticamente per testi lunghi */
+    margin: 10px 0; /* Spazio verticale tra paragrafi e titoli */
 }
+
+/* Aggiungi stili aggiuntivi se necessario */
