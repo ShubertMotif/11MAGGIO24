@@ -1,0 +1,83 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crea Offerta</title>
+</head>
+<body>
+    <h1>Crea la tua offerta</h1>
+    <form action="/crea_offerta" method="post">
+        <select name="tipo_offerta">
+            <option value="vendi">Vendi</option>
+            <option value="compra">Compra</option>
+        </select>
+        <input type="float" name="quantita" placeholder="Quantità Monero XMR" required>
+        <input type="float" name="prezzo" placeholder="Prezzo in USDT" required>
+        <button type="submit">Calcola</button>
+    </form>
+
+<!-- Ancora per Offerte Monero/USDT -->
+<div id="offerte-anchor"></div>
+
+<h2>Le tue Offerte Monero/USDT</h2>
+<form action="#offerte-anchor" method="get">
+    <button type="submit">Aggiorna Offerte</button>
+</form>
+<!-- Ancora per Offerte Monero/USDT -->
+<div id="offerte-anchor"></div>
+
+<ul>
+    <div class="offerte-container">
+    {% for offerta in offerte|reverse %}
+        {% if offerta.utente_id == current_user.id %}
+        <div class="offerta-wrapper {{ 'compra' if offerta.tipo_offerta == 'compra' else 'vendi' }}">
+            <div class="offerta">
+                <h3>Dettaglio Offerta</h3>
+                <h4>{{ offerta.tipo_offerta | capitalize }} Monero XMR</h4>
+                <p>Quantità XMR: {{ offerta.quantita_monero }}</p>
+                <p>Prezzo per XMR: {{ offerta.prezzo_monero }} USDT</p>
+                <p>Totale USDT: {{ offerta.quantita_usdt }}</p>
+                <!-- Codice HTML aggiuntivo -->
+                {% if offerta.tipo_offerta == 'compra' %}
+                    <!-- Codice HTML per offerte di acquisto (compra) -->
+                     <!-- Altri dettagli dell'offerta -->
+                    <!-- Aggiungi qui il resto del codice HTML -->
+                    <a href="{{ url_for('vendi_xmr_usdt', offerta_id=offerta.id) }}" class="btn btn-success">Vendi XMR</a>
+                {% elif offerta.tipo_offerta == 'vendi' %}
+                    <!-- Codice HTML per offerte di vendita (vendi)
+                    <p> Prezzi in dollari calcolati con una quotazione di monero pari a {{prezzo_monero}} $/XMR da CoinGeko</p>
+                    <!-- Altri dettagli dell'offerta -->
+                    <!-- Aggiungi qui il resto del codice HTML -->
+                    <a href="{{ url_for('compra_xmr_usdt', offerta_id=offerta.id) }}" class="btn btn-danger">Compra XMR</a>
+                {% endif %}
+                <br>
+                 <a href="{{ url_for('offerta_dettaglio', offerta_id=offerta.id) }}" class="btn btn-info">Modifica Offerta</a>
+
+
+      s
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <p>Nessuna offerta trovata.</p>
+    {% endfor %}
+    </div>
+</ul>
+
+
+<style>
+    .compra { color: white; }
+    .vendi { color: white; }
+</style>
+    </ul>
+
+<p></p>
+<p></p>
+</body>
+
+</html>
+
+{% endblock %}

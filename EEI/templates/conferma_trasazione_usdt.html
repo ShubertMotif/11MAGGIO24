@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferma Transazione USDT</title>
+</head>
+<body>
+    <h1>Conferma Transazione USDT</h1>
+    <p><strong>Titolo:</strong> {{ title }}</p>
+    <p><strong>User ID:</strong> {{ user_id }}</p>
+    <p><strong>Prezzo EUR:</strong> {{ price_eur }}</p>
+    <p><strong>Indirizzo del portafoglio TRON:</strong> {{ tron_wallet_address }}</p>
+
+<form action="{{ url_for('conferma_invio_usdt') }}" method="POST">
+    <input type="hidden" name="indirizzo_mittente" value="{{ indirizzo_mittente }}">
+    <input type="hidden" name="quantita" value="{{ price_eur }}">
+    <button type="submit">Conferma Invio USDT</button>
+</form>
+
+
+
+
+
+
+</body>
+</html>

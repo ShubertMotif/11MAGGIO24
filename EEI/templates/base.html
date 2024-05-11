@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monero Store ITA</title>
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+            {% endblock %}
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('index') }}"><h1>Home</h1></a></li>
+        <li><a href="{{ url_for('offerte') }}"><h1>Offerte</h1></a></li>
+        <li><a href="{{ url_for('register') }}"><h1>Registrati</h1></a></li> <!-- Link a Registrati -->
+        <li><a href="{{ url_for('login') }}"><h1>Accedi</h1></a></li> <!-- Link a Accedi -->
+        {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('dashboard') }}"><h2>Dashboard</h2></a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="content">
+    {% if current_user.is_authenticated %}
+        <h2>Utente {{ current_user.username }}!</h2>
+    {% endif %}
+
+    <hr>
+
+    {% block content %}{% endblock %}
+</div>
+
+{% block scripts %}
+<script>
+    function copyText(elementId) {
+        var element = document.getElementById(elementId);
+        var text = element.innerText || element.textContent; // Usa innerText o textContent a seconda del supporto del browser
+        var tempElement = document.createElement("textarea");
+        tempElement.value = text;
+        document.body.appendChild(tempElement);
+        tempElement.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempElement);
+        var label = (elementId === 'address') ? 'Indirizzo' : 'Seed';
+        alert(label + " copiato negli appunti!");
+    }
+</script>
+{% endblock %}
+</body>
+</html>

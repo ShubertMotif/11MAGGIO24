@@ -1,0 +1,53 @@
+/* Stili per il menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: #333;
+  display: none; /* Nascondi il menu principale per default */
+}
+
+nav ul li {
+  float: none; /* Resetta il float */
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  background-color: #111;
+}
+
+nav ul li a h3 {
+  margin: 0;
+}
+
+/* Stili per il menu a tendina */
+.menu-toggle {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+/* Mostra il menu a tendina solo su dispositivi mobili */
+@media (max-width: 768px) {
+  nav ul li {
+    display: none; /* Nascondi gli elementi del menu */
+  }
+
+  .menu-toggle {
+    display: block; /* Mostra il link del menu a tendina */
+  }
+
+  .menu-active ul {
+    display: block; /* Mostra il menu a tendina quando il menu è attivo */
+  }
+}
