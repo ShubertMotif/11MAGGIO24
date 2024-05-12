@@ -247,35 +247,51 @@ def index():
 
 
 # Dashboard route
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-
-    if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        photo = request.files['photo']
-        price_eur = request.form['price_eur']
-        province = request.form['province']
-
-
-        if photo:
-            filename = save_photo(photo)
-            price_monero = float(price_eur) / get_xmr_price()
-            tron_wallet_address=current_user.tron_wallet_address
-            new_photo = Photo(filename=filename, title=title, description=description, user=current_user,
-                              price_eur=price_eur, price_monero=price_monero, province=province,tron_wallet_address=tron_wallet_address)
-            # Genera un nuovo indirizzo Monero
-            wallet_name = current_user.username
-            wallet_password = current_user.password
-            address = current_user.monero_wallet
-            new_photo.monero_address = address
-            db.session.add(new_photo)
-            db.session.commit()
-
-        return redirect(url_for('dashboard'))
-
+    # Questa funzione ora gestisce solo il GET per mostrare la dashboard
     return render_template('dashboard.html', user=current_user)
+
+@app.route('/carica_oggetto', methods=['POST', 'GET'])
+@login_required
+def carica_oggetto():
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+            photo = request.files['photo']
+            price_eur = request.form['price_eur']
+            province = request.form['province']
+
+            if photo:
+                filename = save_photo(photo)
+                price_monero = float(price_eur) / get_xmr_price()
+                tron_wallet_address = current_user.tron_wallet_address
+                new_photo = Photo(filename=filename, title=title, description=description, user=current_user,
+                                  price_eur=price_eur, price_monero=price_monero, province=province, tron_wallet_address=tron_wallet_address)
+                # Qui assumiamo che il portafoglio Monero sia già stato creato per l'utente
+                wallet_name = current_user.username
+                wallet_password = current_user.password
+                address = current_user.monero_wallet
+                new_photo.monero_address = address
+                db.session.add(new_photo)
+                db.session.commit()
+
+                flash('Oggetto caricato con successo!', 'success')
+            else:
+                flash('Errore durante il caricamento del file.', 'error')
+        except KeyError as e:
+            # Handle missing form data issue
+            flash(f'Errore: Dato mancante per {e.args[0]}.', 'error')
+
+    elif request.method == 'GET':
+        # Handle GET request, e.g., show the upload form
+        return render_template('crea_oggetto.html')  # Assicurati che questo template esista e contenga il form di caricamento.
+
+    return redirect(url_for('dashboard'))
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])

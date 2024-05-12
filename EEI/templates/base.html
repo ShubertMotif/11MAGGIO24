@@ -11,15 +11,20 @@
             padding: 0;
             margin: 0;
             list-style-type: none;
-            background: #f4f4f4;
+            background: #333; /* Colore dello sfondo del menu nero */
             display: none; /* Nasconde il menu di default */
         }
         nav ul li {
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: none; /* Rimuove il bordo */
         }
         nav ul.active {
             display: block; /* Mostra il menu quando è attivo */
+        }
+        nav ul li a {
+            color: white; /* Colore del testo degli elementi del menu */
+            text-decoration: none; /* Rimuove il sottolineato dai link */
+            display: block; /* Estende l'area cliccabile all'intera larghezza del li */
         }
 
         /* Stile del pulsante Menu, visibile su tutti i dispositivi */
@@ -27,8 +32,8 @@
             display: block;
             cursor: pointer;
             font-size: 24px;
-            background: #333;
-            color: white;
+            background: #333; /* Colore di sfondo del pulsante nero */
+            color: white; /* Colore del testo del pulsante */
             text-align: center;
             padding: 10px;
         }
@@ -68,7 +73,6 @@
 {% block scripts %}
 <!-- Altri script specifici della pagina possono essere inseriti qui -->
 {% endblock %}
-
 
 </body>
 </html>

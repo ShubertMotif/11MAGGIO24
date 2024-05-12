@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offerte</title>
+    <link rel="stylesheet" href="path/to/your/stylesheet.css"> <!-- se hai altri stili -->
+    <style>
+        /* Inserisci qui il CSS specifico per le offerte */
+        .offerte-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 80%;
+            box-sizing: border-box;
+        }
+        .offerta {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
 <div class="offerte-container">
     {% for offerta in offerte|reverse %}
         {% if offerta.IS_FILLED == FALSE %}
@@ -34,5 +56,15 @@
 </div>
 </body>
 </html>
+<br>
+<br>
+<button onclick="goBack()">Torna Indietro</button>
+
+    <script>
+        function goBack() {
+            window.history.back();  // Usa la funzione back() dell'oggetto history del browser per tornare alla pagina precedente
+        }
+    </script>
+
 
 {% endblock %}

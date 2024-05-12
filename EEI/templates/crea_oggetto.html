@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h4>Carica un nuovo oggetto in vendita</h4>
+    <!-- Form per l'upload delle foto -->
+    <form action="{{ url_for('carica_oggetto') }}" method="POST" enctype="multipart/form-data" style="display: inline-block;">
+        <div class="form-group">
+            <label for="title">Titolo:</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descrizione:</label>
+            <input type="text" name="description" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="price_eur">Prezzo in €:</label>
+            <input type="number" name="price_eur" class="form-control" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="province">Provincia:</label>
+            <input type="text" name="province" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="photo">Foto:</label>
+            <input type="file" name="photo" class="form-control-file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Carica Oggetto</button>
+    </form>
+</div>
+<hr>
+{% endblock %}

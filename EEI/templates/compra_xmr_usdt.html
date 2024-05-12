@@ -13,4 +13,17 @@
     </form>
 
     <a href="#" class="btn btn-danger" onclick="document.getElementById('compraForm').submit(); return false;">Conferma Compra XMR</a>
+<br>
+<br>
+<button onclick="goBack()">Torna Indietro</button>
+
+    <script>
+        function goBack() {
+            window.history.back();  // Usa la funzione back() dell'oggetto history del browser per tornare alla pagina precedente
+        }
+    </script>
+
+
+
+
 {% endblock %}
