@@ -5,9 +5,9 @@ body {
     font-family: Arial, sans-serif; /* Font leggibile per testi sul web */
 }
 
-/* Container generale per le foto, massimo 75% dello schermo */
+/* Container generale per le foto, ridotto al 50% dello schermo per index */
 .photo-container {
-    max-width: 75%;
+    max-width: 50%;
     margin: 0 auto; /* Centra il container orizzontalmente */
     padding: 20px; /* Spazio intorno al contenuto interno */
     box-sizing: border-box; /* Include padding e border nel width/height */

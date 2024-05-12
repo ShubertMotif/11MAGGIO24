@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monero Store ITA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
@@ -10,41 +12,31 @@
             margin: 0;
             list-style-type: none;
             background: #f4f4f4;
+            display: none; /* Nasconde il menu di default */
         }
         nav ul li {
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
-
-        /* Stili per il menu a scomparsa su dispositivi mobili */
-        @media (max-width: 768px) {
-            .menu-btn {
-                display: block;
-                cursor: pointer;
-                font-size: 24px;
-                background: #333;
-                color: white;
-                text-align: center;
-                padding: 10px;
-            }
-            nav ul {
-                display: none; /* Nasconde il menu di default */
-            }
-            nav ul.active {
-                display: block; /* Mostra il menu quando è attivo */
-            }
+        nav ul.active {
+            display: block; /* Mostra il menu quando è attivo */
         }
-        /* Nasconde il pulsante 'Menu' su desktop */
-        @media (min-width: 769px) {
-            .menu-btn {
-                display: none;
-            }
+
+        /* Stile del pulsante Menu, visibile su tutti i dispositivi */
+        .menu-btn {
+            display: block;
+            cursor: pointer;
+            font-size: 24px;
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="menu-btn">Monero Store ITA</div> <!-- Pulsante Menu -->
+<div class="menu-btn">Menu</div> <!-- Pulsante Menu -->
 <nav>
     <ul>
         <li><a href="{{ url_for('index') }}">Home</a></li>
@@ -56,6 +48,10 @@
         {% endif %}
     </ul>
 </nav>
+
+{% block content %}
+<!-- Il contenuto specifico di ogni pagina verrà inserito qui -->
+{% endblock %}
 
 <script>
     // JavaScript per gestire il menu a scomparsa
@@ -69,16 +65,9 @@
     });
 </script>
 
-<div class="content">
-    {% block content %}{% endblock %}
-</div>
-
 {% block scripts %}
-<script>
-    function copyText(elementId) {
-        // funzione preesistente qui
-    }
-</script>
+<!-- Altri script specifici della pagina possono essere inseriti qui -->
 {% endblock %}
+
 </body>
 </html>
