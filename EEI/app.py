@@ -253,6 +253,14 @@ def dashboard():
     # Questa funzione ora gestisce solo il GET per mostrare la dashboard
     return render_template('dashboard.html', user=current_user)
 
+@app.errorhandler(500)
+def handle_500_error(e):
+    # Funzione che gestisce l'errore 500
+    return render_template('error_loading.html'), 500
+
+
+
+
 @app.route('/carica_oggetto', methods=['POST', 'GET'])
 @login_required
 def carica_oggetto():

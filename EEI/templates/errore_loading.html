@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Errore del Server</title>
+</head>
+<body>
+    <h1>Errore del Server</h1>
+    <p>Si è verificato un problema con il server. La pagina verrà ricaricata automaticamente tra 2 minuti o puoi ricaricarla manualmente cliccando il pulsante qui sotto.</p>
+
+    <!-- Pulsante per ricaricare la pagina index manualmente -->
+    <button onclick="window.location.href='/';">Ricarica Ora</button>
+
+    <script>
+        var timeLeft = 120; // tempo in secondi
+        var elem = document.getElementById('timer');
+        var timerId = setInterval(countdown, 1000);
+
+        function countdown() {
+            if (timeLeft == -1) {
+                clearTimeout(timerId);
+                doSomething();
+            } else {
+                elem.innerHTML = 'La pagina verrà ricaricata in ' + timeLeft + ' secondi.';
+                timeLeft--;
+            }
+        }
+
+        function doSomething() {
+            window.location.href = '/'; // Reindirizza alla home page
+        }
+    </script>
+    <p id="timer"></p>
+</body>
+</html>
