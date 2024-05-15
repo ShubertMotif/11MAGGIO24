@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Stili specifici per i dispositivi più grandi */
+  @media (min-width: 992px) { /* breakpoint per dispositivi larghi come desktop */
+    .photo-card img {
+      max-width: 50%; /* Limita la larghezza massima dell'immagine */
+    }
+    #photos-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around; /* Allinea le foto orizzontalmente con spazio uniforme */
+    }
+    .photo-card {
+      width: calc(50% - 20px); /* Calcola la larghezza tenendo conto del margin */
+      margin: 10px; /* Distanza tra le carte */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Ombra leggera per migliorare l'estetica */
+    }
+  }
+
+  /* Stili per dispositivi mobili (già esistenti) */
+  .photo-card {
+    border: 1px solid #ddd; /* Bordo sottile per definire il contorno */
+    border-radius: 4px; /* Angoli arrotondati */
+    overflow: hidden; /* Nasconde contenuti che fuoriescono */
+    margin-bottom: 20px; /* Spazio tra le carte */
+    text-align: center; /* Centra il testo e immagini all'interno */
+  }
+  .photo-card img {
+    width: 100%; /* Larghezza massima all'interno del container */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
+  }
+</style>
+
+<div style="text-align: center;">
+  <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home" style="margin: 20px auto; display: block;" width="300" height="300">
+  </a>
+</div>
+
+
+<hr>
+<h3>SFOGLIA PER CATEGORIA</h3>
+<form method="GET" action="{{ url_for('index') }}">
+    <select name="categoria" onchange="this.form.submit()">
+        <option value="">TUTTI I PRODOTTI</option>
+        {% for categoria in categories %}
+        <option value="{{ categoria }}" {% if request.args.get('categoria') == categoria %}selected{% endif %}>
+            {{ categoria }}
+        </option>
+        {% endfor %}
+    </select>
+</form>
+<!-- Mostra le foto di tutti gli utenti in ordine inverso -->
+{% if photos %}
+  <h2>Le foto degli utenti</h2>
+  <div id="photos-container">
+    {% for photo in photos|reverse %}
+      <div class="photo-card" id="photo-{{ photo.id }}">
+        <a href="{{ url_for('photo_detail', photo_id=photo.id) }}">
+          <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" alt="{{ photo.title }}">
+        </a>
+        <h2>{{ photo.title }}</h2>
+        <p>{{ photo.description }}</p>
+        <p>Prezzo in €: {{ photo.price_eur }}</p>
+        <p>Prezzo in Monero: {{ photo.price_monero }}</p>
+        <p>Provincia: {{ photo.province }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Non ci sono foto caricate dagli utenti.</p>
+
+{% endif %}
+<hr>
+{% endblock %}

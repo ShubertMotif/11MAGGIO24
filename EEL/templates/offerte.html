@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offerte</title>
+    <link rel="stylesheet" href="path/to/your/stylesheet.css"> <!-- se hai altri stili -->
+    <style>
+        /* Inserisci qui il CSS specifico per le offerte */
+        .offerte-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 80%;
+            box-sizing: border-box;
+        }
+        .offerta {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<div class="offerte-container">
+    {% for offerta in offerte|reverse %}
+        {% if offerta.IS_FILLED == FALSE %}
+            {% if offerta.tipo_offerta == 'vendi' and offerta.bilancio_sboccato != 0 %}
+                <div class="offerta-wrapper vendi">
+                    <div class="offerta">
+                        <h3>Offerta</h3>
+                        <p>Quantità XMR: {{ offerta.quantita_monero }}</p>
+                        <p>XMR/USDT: {{ offerta.prezzo_monero }} USDT</p>
+                        <p>Totale USDT: {{ offerta.quantita_usdt }}</p>
+                        <!-- Codice HTML aggiuntivo -->
+                        <button type="button" onclick="window.location='{{ url_for('compra_xmr_usdt', offerta_id=offerta.id) }}'" class="btn btn-danger" style="background-color: red; border-color: red;">Compra XMR con USDT</button>
+                    </div>
+                </div>
+            {% elif offerta.tipo_offerta == 'compra' and offerta.bilancio_usdt != 0 %}
+                <div class="offerta-wrapper compra">
+                    <div class="offerta">
+                        <h3>Offerta</h3>
+                        <p>Quantità XMR: {{ offerta.quantita_monero }}</p>
+                        <p>XMR/USDT: {{ offerta.prezzo_monero }} USDT</p>
+                        <p>Totale USDT: {{ offerta.quantita_usdt }}</p>
+                        <!-- Codice HTML aggiuntivo -->
+                        <button type="button" onclick="window.location='{{ url_for('vendi_xmr_usdt', offerta_id=offerta.id) }}'" class="btn btn-success" style="background-color: green; border-color: green;">Vendi XMR per USDT</button>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p>Nessuna offerta trovata.</p>
+    {% endfor %}
+</div>
+</body>
+</html>
+<br>
+<br>
+<button onclick="goBack()">Torna Indietro</button>
+
+    <script>
+        function goBack() {
+            window.history.back();  // Usa la funzione back() dell'oggetto history del browser per tornare alla pagina precedente
+        }
+    </script>
+
+
+{% endblock %}

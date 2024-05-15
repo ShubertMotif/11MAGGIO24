@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monero Store ITA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Stili base per il menu */
+        nav ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            background: #333; /* Colore dello sfondo del menu nero */
+            display: none; /* Nasconde il menu di default */
+        }
+        nav ul li {
+            padding: 10px;
+            border-bottom: none; /* Rimuove il bordo */
+        }
+        nav ul.active {
+            display: block; /* Mostra il menu quando è attivo */
+        }
+        nav ul li a {
+            color: white; /* Colore del testo degli elementi del menu */
+            text-decoration: none; /* Rimuove il sottolineato dai link */
+            display: block; /* Estende l'area cliccabile all'intera larghezza del li */
+        }
+
+        /* Stile del pulsante Menu, visibile su tutti i dispositivi */
+        .menu-btn {
+            display: block;
+            cursor: pointer;
+            font-size: 24px;
+            background: #333; /* Colore di sfondo del pulsante nero */
+            color: white; /* Colore del testo del pulsante */
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-btn">Menu</div> <!-- Pulsante Menu -->
+<nav>
+    <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('offerte') }}">Offerte</a></li>
+        <li><a href="{{ url_for('register') }}">Registrati</a></li>
+        <li><a href="{{ url_for('login') }}">Accedi</a></li>
+        {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% block content %}
+<!-- Il contenuto specifico di ogni pagina verrà inserito qui -->
+{% endblock %}
+
+<script>
+    // JavaScript per gestire il menu a scomparsa
+    document.querySelector('.menu-btn').addEventListener('click', function() {
+        var menu = document.querySelector('nav ul');
+        if (menu.classList.contains('active')) {
+            menu.classList.remove('active');
+        } else {
+            menu.classList.add('active');
+        }
+    });
+</script>
+
+{% block scripts %}
+<!-- Altri script specifici della pagina possono essere inseriti qui -->
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Carica Oggetto</title>
+</head>
+<body>
+    <h1>Carica un nuovo oggetto</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="title">Titolo:</label>
+        <input type="text" name="title" required><br>
+        <label for="description">Descrizione:</label>
+        <input type="text" name="description" required><br>
+        <label for="photo">Foto:</label>
+        <input type="file" name="photo" required><br>
+        <label for="price_eur">Prezzo in €:</label>
+        <input type="number" name="price_eur" step="0.01" required><br>
+        <label for="province">Provincia:</label>
+        <input type="text" name="province" required><br>
+        <label for="categoria">Categoria:</label>
+        <select name="categoria">
+            {% for cat in categories %}
+            <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Carica Oggetto</button>
+    </form>
+<br>
+<br>
+<button onclick="goBack()">Torna Indietro</button>
+
+    <script>
+        function goBack() {
+            window.history.back();  // Usa la funzione back() dell'oggetto history del browser per tornare alla pagina precedente
+        }
+    </script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+{% endblock %}

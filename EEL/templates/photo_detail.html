@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Dettaglio Foto</h1>
+
+<div class="photo-container" style="text-align: center; max-width: 75%; margin: auto;">
+    <a href="{{ url_for('photo_detail', photo_id=photo.id) }}">
+      <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" alt="Foto di {{ photo.title }}" style="max-width: 100%; height: auto;">
+    </a>
+</div>
+<br>
+<br>
+<div class="actions" style="display: flex; flex-direction: column; align-items: center;">
+    <form action="{{ url_for('conferma_trasazione', photo_id=photo.id) }}" method="POST" style="width: 100%; text-align: center;">
+      <button type="submit" class="btn btn-orange" style="padding: 10px 20px; border: none; border-radius: 5px; background-color: orange; color: white; margin: 10px auto; font-size: 16px;">
+        Acquista con XMR Monero <i class="fas fa-shopping-cart"></i>
+      </button>
+    </form>
+
+    <form action={{url_for('conferma_trasazione_usdt', photo_id=photo.id)}} method="post">
+        <button type="submit" class="btn btn-orange">
+            Acquista con USDT
+        </button>
+    </form>
+    <br>
+    <br>
+    <button onclick="toggleMessageForm()" class="btn btn-info">Invia un messaggio a {{ photo.user.username }}</button>
+    <div id="messageForm" style="display: none;">
+    <h2>Invia un nuovo messaggio a {{ photo.user.username }}</h2>
+    <form action="{{ url_for('messages') }}" method="post">
+        <input type="hidden" name="recipient" value="{{ photo.user.username }}">
+        <label for="subject">Oggetto:</label>
+        <input type="text" name="subject" id="subject" required value="{{ photo.title }}">
+        <br>
+        <label for="body">Messaggio:</label>
+        <textarea name="body" id="body" cols="30" rows="5" required></textarea>
+        <br>
+        <input type="submit" value="Invia messaggio">
+    </form>
+</div>
+
+<script>
+function toggleMessageForm() {
+    var form = document.getElementById('messageForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+
+
+    <div class="photo-info">
+        <h3>CATEGORIA:{{photo.categoria}}</h3>
+      <h2>NOME: {{ photo.title }}</h2>
+      <p>DESCRIZIONE: {{ photo.description }}</p>
+      <p>Prezzo in Dollari: {{ photo.price_eur }}</p>
+      <p>Prezzo in Monero: {{ photo.price_monero }}</p>
+      <p>Località: {{ photo.province }}</p>
+      <p>Address: {{ photo.tron_wallet_address }}</p>
+
+
+    </div>
+
+    {% if photo.user_id == current_user.id %}
+    <div class="delete-photo">
+        <form action="{{ url_for('elimina_foto', photo_id=photo.id) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
+          <button type="submit" class="btn btn-danger">Elimina Foto</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="navigation-links">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">Torna Indietro</a>
+    </div>
+</div>
+
+
+{% endblock %}
