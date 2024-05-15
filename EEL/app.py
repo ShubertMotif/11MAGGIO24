@@ -96,6 +96,9 @@ class Photo(db.Model):
     monero_address = db.Column(db.String(255), nullable=True)
     tron_wallet_address = db.Column(db.String(255), nullable=True)
     categoria=db.Column(db.String(255), nullable=True)
+    is_PRIVATO= db.Column(db.Boolean, nullable=False)
+    is_SPEDIZIONE = db.Column(db.Boolean, nullable=False)
+    costo_spedizione=db.Column(db.Float, nullable=True)
 
 
 
@@ -311,13 +314,16 @@ def carica_oggetto():
         price_eur = request.form['price_eur']
         province = request.form['province']
         categoria = request.form['categoria']
+        is_PRIVATO = request.form['is_PRIVATO']
+        is_SPEDIZIONE = request.form['is_SPEDIZIONE']
+        costo_spedizione = request.form['costo_spedizione']
 
         if photo:
             filename = save_photo(photo)
             price_monero = float(price_eur) / get_xmr_price()
             new_photo = Photo(filename=filename, title=title, description=description, user=current_user,
                               price_eur=price_eur, price_monero=price_monero, province=province,
-                              categoria=categoria, tron_wallet_address=current_user.tron_wallet_address)
+                              categoria=categoria, tron_wallet_address=current_user.tron_wallet_address,is_PRIVATO=is_PRIVATO,is_SPEDIZIONE=is_SPEDIZIONE,costo_spedizione=costo_spedizione)
             db.session.add(new_photo)
             db.session.commit()
             flash('Oggetto caricato con successo!', 'success')

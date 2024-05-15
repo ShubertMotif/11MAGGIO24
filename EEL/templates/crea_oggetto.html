@@ -1,54 +1,85 @@
-<!-- index.html -->
+<!-- crea_oggetto.html -->
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label, input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box; /* Include padding and border in the element's width and height */
+    }
+    input[type="checkbox"] {
+        width: auto;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    h1 {
+        text-align: center;
+    }
+</style>
 
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <title>Carica Oggetto</title>
-</head>
-<body>
+<div class="container">
     <h1>Carica un nuovo oggetto</h1>
     <form method="POST" enctype="multipart/form-data">
         <label for="title">Titolo:</label>
-        <input type="text" name="title" required><br>
+        <input type="text" id="title" name="title" required>
+
         <label for="description">Descrizione:</label>
-        <input type="text" name="description" required><br>
+        <input type="text" id="description" name="description" required>
+
         <label for="photo">Foto:</label>
-        <input type="file" name="photo" required><br>
+        <input type="file" id="photo" name="photo" required>
+
         <label for="price_eur">Prezzo in €:</label>
-        <input type="number" name="price_eur" step="0.01" required><br>
+        <input type="number" id="price_eur" name="price_eur" step="0.01" required>
+
         <label for="province">Provincia:</label>
-        <input type="text" name="province" required><br>
+        <input type="text" id="province" name="province" required>
+
         <label for="categoria">Categoria:</label>
-        <select name="categoria">
+        <select id="categoria" name="categoria">
             {% for cat in categories %}
             <option value="{{ cat }}">{{ cat }}</option>
             {% endfor %}
-        </select><br>
+        </select>
+
+        <label for="is_PRIVATO">Privato:</label>
+        <input type="checkbox" id="is_PRIVATO" name="is_PRIVATO" value="1">
+
+        <label for="is_SPEDIZIONE">Spedizione:</label>
+        <input type="checkbox" id="is_SPEDIZIONE" name="is_SPEDIZIONE" value="1">
+
+        <label for="costo_spedizione">Costo Spedizione (€):</label>
+        <input type="number" id="costo_spedizione" name="costo_spedizione" step="0.01">
+
         <button type="submit">Carica Oggetto</button>
     </form>
-<br>
-<br>
-<button onclick="goBack()">Torna Indietro</button>
+    <button onclick="goBack()">Torna Indietro</button>
+</div>
 
-    <script>
-        function goBack() {
-            window.history.back();  // Usa la funzione back() dell'oggetto history del browser per tornare alla pagina precedente
-        }
-    </script>
-
-
-
-
-
-
-
-</body>
-</html>
-
-
-
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 {% endblock %}

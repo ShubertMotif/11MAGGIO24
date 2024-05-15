@@ -2790,3 +2790,6 @@
 2024-05-15 05:52:10.352	[RPC0]	WARNING	wallet.wallet2	src/wallet/wallet2.cpp:1920	Transaction extra has unsupported format: <49af228599900f739d628376ef1a84b328f1a0187caaa5c36045bb3c5945b917>
 2024-05-15 12:23:11.051	[RPC0]	WARNING	wallet.wallet2	src/wallet/wallet2.cpp:1920	Transaction extra has unsupported format: <9c2cdafbbd59e24918b66cea15017066334b7d9098e7250461cb572779846fab>
 2024-05-15 12:24:32.038	[RPC0]	WARNING	wallet.wallet2	src/wallet/wallet2.cpp:1920	Transaction extra has unsupported format: <9c2cdafbbd59e24918b66cea15017066334b7d9098e7250461cb572779846fab>
+2024-05-15 14:17:58.373	[RPC0]	ERROR	wallet.wallet2	src/wallet/wallet2.cpp:14406	!r. THROW EXCEPTION: tools::error::no_connection_to_daemon
+2024-05-15 14:17:58.382	[RPC0]	ERROR	wallet.rpc	src/wallet/wallet_rpc_server.cpp:155	Exception at while refreshing, what=no connection to daemon
+2024-05-15 14:31:47.031	[RPC0]	ERROR	wallet.wallet2	src/wallet/wallet2.cpp:4841	boost::filesystem::exists(m_wallet_file, ignored_ec). THROW EXCEPTION: error::file_exists

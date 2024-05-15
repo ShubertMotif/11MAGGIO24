@@ -37,6 +37,9 @@ class Photo(db.Model):
     monero_address = db.Column(db.String(255), nullable=True)
     tron_wallet_address = db.Column(db.String(255), nullable=True)
     categoria = db.Column(db.String(255), nullable=True)
+    is_PRIVATO= db.Column(db.Boolean, nullable=False)
+    is_SPEDIZIONE = db.Column(db.Boolean, nullable=False)
+    costo_spedizione=db.Column(db.Float, nullable=True)
 
 class Offerta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
