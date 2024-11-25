@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Portafoglio USDT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Portafoglio USDT</h1>
+        <div class="update">
+            <a href="{{ url_for('portafoglio_USDT') }}">
+                <img src="{{ url_for('static', filename='images/USDT_icon.png') }}" alt="USDT Icon">
+                <span>Aggiorna</span>
+            </a>
+        </div>
+        <p>Benvenuto, {{ user.username }} nel tuo portafoglio USDT!</p>
+        <div class="links">
+            <a href="/invia_usdt">Invia USDT</a>
+            <a href="/transizioni_usdt">Transazioni USDT</a>
+            <a href="/dashboard">Dashboard</a>
+        </div>
+        <div class="info">
+            <p>Ultimo numero di blocco: {{ latest_block_number }}</p>
+            <p>ID ultimo blocco: {{ latest_block_id }}</p>
+            <p>Bilancio in USDT: {{ account_balance }}</p>
+            <p>Indirizzo del Portafoglio USDT: <span id="tron_wallet_address">{{ tron_wallet_address }}</span></p>
+            <button onclick="copyText('tron_wallet_address')">Copia Indirizzo</button>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

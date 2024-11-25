@@ -48,9 +48,20 @@ class Offerta(db.Model):
     quantita_usdt = db.Column(db.Float, nullable=False)
     indirizzo_monero_offerta = db.Column(db.String(255), nullable=False)
     indirizzo_usdt_offerta = db.Column(db.String(255), nullable=False)
-    tipo_offerta = db.Column(db.String(50), nullable=False)
+    tipo_offerta = db.Column(db.String(50), nullable=False)  # 'buy' o 'sell'
     utente_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     utente = db.relationship('User', backref='offerte')
+    private_key_USDT_hex=db.Column(db.String(255), nullable=True)
+    bilancio_usdt= db.Column(db.Float, nullable=False)
+    bilancio_xmr= db.Column(db.Float, nullable=False)
+    indirizzo_BUY_USDT = db.Column(db.String(255), nullable=True)
+    indirizzo_BUY_XMR = db.Column(db.String(255), nullable=True)
+    XMR_name=db.Column(db.String(255), nullable=True)
+    bilancio_xmr_sbloccato = db.Column(db.Float, nullable=False)
+    is_FILLED = db.Column(db.Boolean, nullable=False)
+    indirizzo_SELL_USDT = db.Column(db.String(255), nullable=True)
+    indirizzo_SELL_XMR = db.Column(db.String(255), nullable=True)
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

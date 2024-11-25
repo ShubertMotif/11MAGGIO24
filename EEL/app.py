@@ -252,6 +252,7 @@ def offerte():
 def index():
     categoria_selezionata = request.args.get('categoria')
     categories = load_categories_from_txt()  # Assicurati che questa funzione ritorni tutte le categorie disponibili
+    xmr_price_usdt=get_xmr_price()
 
     if categoria_selezionata:
         # Filtra le foto per la categoria selezionata
@@ -260,7 +261,7 @@ def index():
         # Mostra tutte le foto se nessuna categoria è selezionata
         photos = Photo.query.order_by(Photo.id.desc()).all()
 
-    return render_template('index.html', photos=photos, categories=categories)
+    return render_template('index.html', photos=photos, categories=categories,xmr_price_usdt=xmr_price_usdt)
 
 
 
@@ -314,16 +315,17 @@ def carica_oggetto():
         price_eur = request.form['price_eur']
         province = request.form['province']
         categoria = request.form['categoria']
-        is_PRIVATO = request.form['is_PRIVATO']
-        is_SPEDIZIONE = request.form['is_SPEDIZIONE']
-        costo_spedizione = request.form['costo_spedizione']
+        is_PRIVATO = 'is_PRIVATO' in request.form
+        is_SPEDIZIONE = 'is_SPEDIZIONE' in request.form
+        costo_spedizione = request.form['costo_spedizione'] if is_SPEDIZIONE else 0
 
         if photo:
             filename = save_photo(photo)
             price_monero = float(price_eur) / get_xmr_price()
             new_photo = Photo(filename=filename, title=title, description=description, user=current_user,
                               price_eur=price_eur, price_monero=price_monero, province=province,
-                              categoria=categoria, tron_wallet_address=current_user.tron_wallet_address,is_PRIVATO=is_PRIVATO,is_SPEDIZIONE=is_SPEDIZIONE,costo_spedizione=costo_spedizione)
+                              categoria=categoria, tron_wallet_address=current_user.tron_wallet_address,
+                              is_PRIVATO=is_PRIVATO, is_SPEDIZIONE=is_SPEDIZIONE, costo_spedizione=costo_spedizione)
             db.session.add(new_photo)
             db.session.commit()
             flash('Oggetto caricato con successo!', 'success')
@@ -333,7 +335,6 @@ def carica_oggetto():
 
     categories = app.config['CATEGORIES']
     return render_template('crea_oggetto.html', categories=categories)
-
 
 
 
