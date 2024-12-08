@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Invia Transazione Monero</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invia Monero</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Invia Transazione Monero</h1>
-    <form method="POST" action="{{ url_for('send_monero_transaction') }}">
-        <div>
-            <label for="recipient_address">Indirizzo Destinatario:</label>
-            <input type="text" name="recipient_address" required>
-        </div>
-        <div>
-            <label for="amount_xmr">Quantità XMR:</label>
-            <input type="number" step="0.01" name="amount_xmr" required>
-        </div>
-        <div>
-            <button type="submit">Invia</button>
-        </div>
-    </form>
+    <div class="container">
+        <h2>Invia Transazione Monero</h2>
+        <form method="POST" action="{{ url_for('send_monero_transaction') }}">
+            <div style="margin-bottom: 20px;">
+                <label for="recipient_address">Indirizzo Destinatario:</label>
+                <div style="display: flex; align-items: center;">
+                    <input type="text" id="recipient_address" name="recipient_address" required style="flex-grow: 1; margin-right: 10px;">
+                    <button type="button" id="paste-address-btn" class="btn">Incolla</button>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="amount_xmr">Quantità XMR:</label>
+                <input type="number" id="amount_xmr" step="0.01" name="amount_xmr" required>
+            </div>
+            <div>
+                <button type="submit" class="btn">Invia</button>
+            </div>
+        </form>
+        <a href="{{ url_for('portafoglio_monero') }}" class="btn">Torna al Portafoglio</a>
+    </div>
+
+    <script>
+        // Incolla l'indirizzo copiato negli appunti nel campo "Indirizzo Destinatario"
+        document.getElementById('paste-address-btn').addEventListener('click', function() {
+            navigator.clipboard.readText()
+                .then(text => {
+                    document.getElementById('recipient_address').value = text;
+                    alert("Indirizzo incollato!");
+                })
+                .catch(err => {
+                    alert("Errore durante l'incollamento: " + err);
+                });
+        });
+    </script>
 </body>
 </html>
