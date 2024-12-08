@@ -13,6 +13,9 @@ from tronpy import Tron
 from tronpy.keys import PrivateKey
 from flask_apscheduler import APScheduler
 import csv
+from flask_socketio import SocketIO, emit
+
+
 
 
 ###################client tron########################################
@@ -37,6 +40,7 @@ class Config:
 
 app = Flask(__name__)
 #app.config.from_object(Config())
+socketio=SocketIO(app)
 
 #scheduler = APScheduler()
 
@@ -981,26 +985,37 @@ def nuovo_indirizzo_usdt():
 @app.route('/portafoglio_monero')
 @login_required
 def portafoglio_monero():
-    user=current_user
-    if is_monero_rpc_alive():
+    return render_template('portafoglio_monero.html', user=current_user)
+
+
+@socketio.on('fetch_balance')
+def handle_fetch_balance(data):
+    wallet_name = data.get('wallet_name')
+    wallet_password = data.get('wallet_password')
+
+    try:
         # Apri il portafoglio Monero
-        wallet_name = current_user.username
-        wallet_password = current_user.password
         open_monero_wallet(wallet_name, wallet_password)
 
-        # Ottieni il seed, l'indirizzo e i bilanci del portafoglio
-        seed = get_wallet_mnemonic(wallet_name, wallet_password)
-        address = show_wallet_address(wallet_name, wallet_password)
+        # Ottieni il bilancio e l'indirizzo
         balance, unlocked_balance = get_wallet_balance(wallet_name, wallet_password)
+        address = show_wallet_address(wallet_name, wallet_password)
 
+        # Ottieni il prezzo in USD e calcola il valore in dollari
         xmr_price = get_xmr_price()
-        balance_usd = "{:,.2f}".format(float(balance) * xmr_price) if xmr_price is not None else None
+        balance_usd = "{:,.2f}".format(float(balance) * xmr_price) if xmr_price else "N/A"
 
-        return render_template('portafoglio_monero.html', address=address, seed=seed, balance=balance, unlocked_balance=unlocked_balance, balance_usd=balance_usd,user=user)
-    else:
-        print("Monero RPC is not responding. Redirecting to loading page...")
-        time.sleep(3)
-        return app.make_response(loading())
+        # Invia i dati aggiornati al client
+        emit('balance_update', {
+            'balance': balance,
+            'unlocked_balance': unlocked_balance,
+            'balance_usd': balance_usd,
+            'address': address
+        })
+    except Exception as e:
+        # Gestione degli errori
+        emit('balance_update', {'error': str(e)})
+
 
 @app.route('/photo/<int:photo_id>')
 def photo_detail(photo_id):
@@ -1521,4 +1536,4 @@ def get_wallet_balance(wallet_name, wallet_password):
 #######################################################
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
